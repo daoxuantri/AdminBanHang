@@ -4,6 +4,7 @@ import hcmute.edu.vn.store.model.DonHangModel;
 import hcmute.edu.vn.store.model.LoaiSpModel;
 import hcmute.edu.vn.store.model.MessageModel;
 import hcmute.edu.vn.store.model.SanPhamMoiModel;
+import hcmute.edu.vn.store.model.ThongKeModel;
 import hcmute.edu.vn.store.model.UserModel;
 import io.reactivex.rxjava3.core.Observable;
 import okhttp3.MultipartBody;
@@ -22,6 +23,10 @@ public interface ApiBanHang {
 
     @GET("getspmoi.php")
     Observable<SanPhamMoiModel> getSpMoi();
+
+    @GET("thongke.php")
+    Observable<ThongKeModel> getThongKe();
+
 
     //POST DATA
     @POST("chitiet.php")

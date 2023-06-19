@@ -21,6 +21,7 @@ import hcmute.edu.vn.store.R;
 import hcmute.edu.vn.store.adapter.GioHangAdapter;
 import hcmute.edu.vn.store.model.EventBus.TinhTongEvent;
 import hcmute.edu.vn.store.utils.Utils;
+import okhttp3.internal.Util;
 
 public class GioHangActivity extends AppCompatActivity {
 
@@ -36,6 +37,9 @@ public class GioHangActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gio_hang);
         initView();
         initControl();
+        if(Utils.mangmuahang != null){
+            Utils.mangmuahang.clear();
+        }
         tinhTongTien();
         
         
