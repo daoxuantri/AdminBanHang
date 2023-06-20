@@ -42,6 +42,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
     public void onBindViewHolder(@NonNull DonHangAdapter.MyViewHolder holder, int position) {
         DonHang donHang = listdonhang.get(position);
         holder.txtdonhang.setText("Đơn hàng: "+donHang.getId() );
+        holder.diachi.setText("Địa chỉ: " + donHang.getDiachi());
         holder.trangthai.setText(trangThaiDon(donHang.getTrangthai()));
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 holder.reChitiet.getContext(),
@@ -96,7 +97,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
-        TextView txtdonhang,trangthai;
+        TextView txtdonhang,trangthai,diachi;
         RecyclerView reChitiet;
         ItemClickListener listener;
 
@@ -105,6 +106,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
             super(itemView);
             txtdonhang = itemView.findViewById(R.id.iddonhang);
             trangthai = itemView.findViewById(R.id.tinhtrang);
+            diachi = itemView.findViewById(R.id.diachi_donhang);
             reChitiet = itemView.findViewById(R.id.recycleview_chitiet);
             itemView.setOnLongClickListener(this);
         }
