@@ -9,6 +9,8 @@ public class DonHang {
     String sodienthoai;
     String tongtien;
     int trangthai;
+    String username;
+    List<Item> item;
 
     public int getTrangthai() {
         return trangthai;
@@ -18,7 +20,7 @@ public class DonHang {
         this.trangthai = trangthai;
     }
 
-    List<Item> item;
+
 
     public int getId() {
         return id;
@@ -66,5 +68,13 @@ public class DonHang {
 
     public void setItem(List<Item> item) {
         this.item = item;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

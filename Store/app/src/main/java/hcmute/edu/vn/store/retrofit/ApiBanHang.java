@@ -27,6 +27,9 @@ public interface ApiBanHang {
     @GET("thongke.php")
     Observable<ThongKeModel> getThongKe();
 
+    @GET("thongkethang.php")
+    Observable<ThongKeModel> getThongKeThang();
+
 
     //POST DATA
     @POST("chitiet.php")
