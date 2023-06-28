@@ -7,6 +7,15 @@ public class User {
     String username;
     String mobile;
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    String uid;
     String token;
 
     public User(){

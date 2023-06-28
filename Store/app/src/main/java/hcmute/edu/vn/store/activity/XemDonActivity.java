@@ -109,6 +109,7 @@ public class XemDonActivity extends AppCompatActivity {
 
     private void pushNotiToUser() {
         //gettoken, donHang.getIduser()
+
         compositeDisposable.add(apiBanHang.gettoken(0,donHang.getIduser())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -116,6 +117,7 @@ public class XemDonActivity extends AppCompatActivity {
 
                         userModel -> {
                             if(userModel.isSuccess()){
+
                                 for(int i=0; i<userModel.getResult().size(); i++){
                                     Map<String, String> data = new HashMap<>();
                                     data.put("title","thongbao");
@@ -133,8 +135,12 @@ public class XemDonActivity extends AppCompatActivity {
                                                         Log.d("logg",throwable.getMessage());
                                                     }
                                             ));
+
+
                                 }
                             }
+
+
 
                         },
                         throwable -> {
@@ -196,6 +202,7 @@ public class XemDonActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 capNhapDonHang();
+                Log.d("XemLog", String.valueOf(donHang.getIduser()));
             }
         });
 

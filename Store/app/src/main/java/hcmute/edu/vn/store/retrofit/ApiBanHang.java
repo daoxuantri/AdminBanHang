@@ -140,8 +140,7 @@ public interface ApiBanHang {
     @POST("gettoken.php")
     @FormUrlEncoded
     Observable<UserModel> gettoken(
-            @Field("status") int status
-            ,
+            @Field("status") int status,
             @Field("iduser") int iduser
 
     );
