@@ -154,4 +154,9 @@ public interface ApiBanHang {
     );
 
 
+    @Multipart
+    @POST("upload.php")
+    Call<MessageModel> uploadFile(@Part MultipartBody.Part file);
+
+
 }
