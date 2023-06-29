@@ -110,7 +110,8 @@ public interface ApiBanHang {
             @Field("gia") String gia,
             @Field("hinhanh") String hinhanh,
             @Field("mota") String mota,
-            @Field("loai") int id
+            @Field("loai") int id,
+            @Field("slsp") int sl
     );
     @POST("updatesp.php")
     @FormUrlEncoded
@@ -120,7 +121,8 @@ public interface ApiBanHang {
             @Field("hinhanh") String hinhanh,
             @Field("mota") String mota,
             @Field("loai") int idloai,
-            @Field("id") int id
+            @Field("id") int id,
+            @Field("slsp") int slsp
     );
 
     @POST("updatetoken.php")

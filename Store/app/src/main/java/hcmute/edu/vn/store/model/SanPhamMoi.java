@@ -10,6 +10,16 @@ public class SanPhamMoi implements Serializable {
     String mota;
     int loai;
 
+    public int getSltonkho() {
+        return sltonkho;
+    }
+
+    public void setSltonkho(int sltonkho) {
+        this.sltonkho = sltonkho;
+    }
+
+    int sltonkho;
+
     public String getHinhanh() {
         return hinhanh;
     }
