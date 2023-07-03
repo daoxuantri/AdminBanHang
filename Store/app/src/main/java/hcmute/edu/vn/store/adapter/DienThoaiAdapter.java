@@ -23,6 +23,7 @@ import hcmute.edu.vn.store.Interface.ItemClickListener;
 import hcmute.edu.vn.store.R;
 import hcmute.edu.vn.store.activity.ChiTietActivity;
 import hcmute.edu.vn.store.model.SanPhamMoi;
+import hcmute.edu.vn.store.utils.Utils;
 
 
 public class DienThoaiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -62,7 +63,16 @@ public class DienThoaiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
             myViewHolder.giasp.setText("Giá: "+ decimalFormat.format(Double.parseDouble(sanPham.getGiasp()))+ "Đ");
             myViewHolder.mota.setText(sanPham.getMota());
-            Glide.with(context).load(sanPham.getHinhanh()).into(myViewHolder.hinhanh);
+//            Glide.with(context).load(sanPham.getHinhanh()).into(myViewHolder.hinhanh);
+
+            if(sanPham.getHinhanh().contains("http")){
+                Glide.with(context).load(sanPham.getHinhanh()).into(myViewHolder.hinhanh);
+            }else{
+
+                Glide.with(context).load(Utils.BASE_URL + sanPham.getHinhanh()).into(myViewHolder.hinhanh);
+            }
+
+
             myViewHolder.setItemClickListener(new ItemClickListener() {
                 @Override
                 public void onClick(View view, int pos, boolean isLongClick) {

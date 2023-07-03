@@ -16,6 +16,7 @@ import java.util.List;
 
 import hcmute.edu.vn.store.R;
 import hcmute.edu.vn.store.model.Item;
+import hcmute.edu.vn.store.utils.Utils;
 
 public class ChiTietAdapter extends RecyclerView.Adapter<ChiTietAdapter.MyViewHolder> {
 
@@ -41,7 +42,15 @@ public class ChiTietAdapter extends RecyclerView.Adapter<ChiTietAdapter.MyViewHo
         Item item = itemList.get(position);
         holder.txtten.setText(item.getTensp()+" ");
         holder.txtsoluong.setText("Số lượng: "+ item.getSoluong() +"");
-        Glide.with(context).load(item.getHinhanh()).into(holder.imagechitiet);
+//        Glide.with(context).load(item.getHinhanh()).into(holder.imagechitiet);
+
+
+        if(item.getHinhanh().contains("http")){
+            Glide.with(context).load(item.getHinhanh()).into(holder.imagechitiet);
+        }else{
+
+            Glide.with(context).load(Utils.BASE_URL + "images/" + item.getHinhanh()).into(holder.imagechitiet);
+        }
     }
 
     @Override
