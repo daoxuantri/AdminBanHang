@@ -1,5 +1,6 @@
 package hcmute.edu.vn.store.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -14,6 +15,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -31,12 +33,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.nex3z.notificationbadge.NotificationBadge;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import hcmute.edu.vn.store.R;
 import hcmute.edu.vn.store.adapter.LoaiSpAdapter;
 import hcmute.edu.vn.store.adapter.SanPhamMoiAdapter;
+import hcmute.edu.vn.store.model.EventBus.SuaXoaEvent;
 import hcmute.edu.vn.store.model.LoaiSp;
 import hcmute.edu.vn.store.model.SanPhamMoi;
 import hcmute.edu.vn.store.model.User;
@@ -69,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
     NotificationBadge badge;
     FrameLayout frameLayout;
     ImageView imgsearch;
+
+
+    //update - delete product
+    SanPhamMoi sanPhamSuaXoa;
 
 
     @Override
@@ -211,6 +222,50 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+    //update - delete product
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        if(item.getTitle().equals("Sửa")){
+            suaSanPham();
+        }else if (item.getTitle().equals("Xóa")){
+            xoaSanPham();
+        }
+        return super.onContextItemSelected(item);
+    }
+    private void suaSanPham() {
+        Intent intent = new Intent(getApplicationContext(), ThemSPActivity.class);
+        intent.putExtra("sua",sanPhamSuaXoa);
+        startActivity(intent);
+    }
+    private void xoaSanPham() {
+        compositeDisposable.add(apiBanHang.xoaSanPham(sanPhamSuaXoa.getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        messageModel -> {
+                            if(messageModel.isSuccess()){
+                                Toast.makeText(getApplicationContext(), messageModel.getMessage(), Toast.LENGTH_LONG).show();
+                                getSpMoi();
+                            }else {
+                                Toast.makeText(getApplicationContext(), messageModel.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        },
+                        throwable -> {
+                            Log.d("log",throwable.getMessage());
+                        }
+
+                ));
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void evenSuaXoa(SuaXoaEvent event){
+        if(event != null){
+            sanPhamSuaXoa = event.getSanPhamMoi();
+        }
+    }
+
     private void ActionViewFlipper() {
         List<String> mangquangcao = new ArrayList<>();
         mangquangcao.add("http://mauweb.monamedia.net/thegioididong/wp-content/uploads/2017/12/banner-Le-hoi-phu-kien-800-300.png");
@@ -309,5 +364,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         compositeDisposable.clear();
         super.onDestroy();
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 }
